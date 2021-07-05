@@ -78,6 +78,11 @@ class Room(core_models.AbstractTimeStamp):
     def __str__(self):
         return self.name
 
+    # Override the 'save' method
+    def save(self, *args, **kwargs):
+        self.city = self.city.title()
+        super().save(*args, **kwargs)
+
     def total_rating(self):
         all_reviews = self.reviews.all()
         all_ratings = [review.average_rating() for review in all_reviews]
