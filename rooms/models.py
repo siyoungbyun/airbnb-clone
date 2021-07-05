@@ -40,7 +40,7 @@ class HouseRule(AbstractItem):
 class Photo(core_models.AbstractTimeStamp):
 
     caption = models.CharField(max_length=80)
-    file = models.ImageField()
+    file = models.ImageField(upload_to="room_photos")
     room = models.ForeignKey("Room", related_name="photos", on_delete=models.CASCADE)
 
     def __str__(self):
@@ -77,3 +77,10 @@ class Room(core_models.AbstractTimeStamp):
 
     def __str__(self):
         return self.name
+
+    def total_rating(self):
+        all_reviews = self.reviews.all()
+        all_ratings = [review.average_rating() for review in all_reviews]
+        number_of_ratings = max(len(all_ratings), 1)
+        total_rating = round(sum(all_ratings) / number_of_ratings, 2)
+        return total_rating

@@ -140,5 +140,8 @@ cython_debug/
 # mac
 .DS_Store
 
-#vscode
+# vscode
 .vscode
+
+# project-specific
+uploads/
